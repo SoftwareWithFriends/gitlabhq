@@ -36,6 +36,8 @@ module Projects
 
       if @project.save
         @project.users_projects.create(project_access: UsersProject::MASTER, user: current_user)
+        team = UserTeam.find_by_name(Gitlab.config.project["initial_user_team"])
+        team.assign_to_project(@project, UserTeam.access_roles[Gitlab.config.project["default_role"]]) unless team.nil?
       end
 
       @project

@@ -84,3 +84,12 @@ Settings.git['timeout']   ||= 10
 
 Settings['satellites'] ||= Settingslogic.new({})
 Settings.satellites['path'] = File.expand_path(Settings.satellites['path'] || "tmp/repo_satellites/", Rails.root)
+
+Settings['users'] ||= Settingslogic.new({})
+Settings.users['initial_user_team'] ||= 'Everyone'
+Settings.users['default_role']      ||= 'Guest'
+Settings.users['admin']             ||= false
+
+Settings['project'] ||= Settingslogic.new({})
+Settings.users['initial_user_team'] ||= 'Everyone'
+Settings.users['default_role']      ||= 'Guest'

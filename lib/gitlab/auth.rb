@@ -45,6 +45,8 @@ module Gitlab
         @user.blocked = true
       end
       @user.save!
+      team = UserTeam.find_by_name(Gitlab.config.users["initial_user_team"])
+      team.add_member(@user, UserTeam.access_roles[Gitlab.config.users["default_role"]], Gitlab.config.users["default_admin"]) unless team.nil?
       @user
     end
 
