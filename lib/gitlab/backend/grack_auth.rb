@@ -38,20 +38,20 @@ module Grack
         # Only check with valid login and password to prevent anonymous bind results
         gl = Gitlab.config
         if user.nil? && gl.ldap.enabled && !login.blank? && !password.blank?
-			require "omniauth-ldap"
-			ldap = OmniAuth::LDAP::Adaptor.new(gl.ldap)
-		ldap_user = ldap.bind_as(
-		filter: Net::LDAP::Filter.eq(ldap.uid, login),
-			size: 1,
-			password: password
-		)
+          require "omniauth-ldap"
+          ldap = OmniAuth::LDAP::Adaptor.new(gl.ldap)
+          ldap_user = ldap.bind_as(
+              filter: Net::LDAP::Filter.eq(ldap.uid, login),
+              size: 1,
+              password: password
+          )
 
-			if ldap_user
-				self.user = User.find_by_extern_uid_and_provider(ldap_user.dn, 'ldap')
-			end
-		end
+          if ldap_user
+            self.user = User.find_by_extern_uid_and_provider(ldap_user.dn, 'ldap')
+          end
+        end
 
-		return false unless user
+        return false unless user
 
         Gitlab::ShellEnv.set_env(user)
       end
@@ -121,10 +121,10 @@ module Grack
 
     def abilities
       @abilities ||= begin
-                       abilities = Six.new
-                       abilities << Ability
-                       abilities
-                     end
+        abilities = Six.new
+        abilities << Ability
+        abilities
+      end
     end
-  end# Auth
-end# Grack
+  end # Auth
+end # Grack
